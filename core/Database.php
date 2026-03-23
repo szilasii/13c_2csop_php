@@ -3,13 +3,18 @@ class Database {
     private $pdo;
 
     public function __construct($config) {
-         $dsn = "mysql:host={$config['db']['host']};dbname={$config['db']['name']};charset=utf8mb4";
-        $this->pdo = new PDO(
+        try {
+            $dsn = "mysql:host={$config['host']};dbname={$config['name']};charset=utf8mb4";
+            $this->pdo = new PDO(
             $dsn,
-            $config['db']['user'],
-            $config['db']['password']
+            $config['user'],
+            $config['password']
         );
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);    
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+        } catch (PDOException $e) {
+            die("Database connection failed: " . $e->getMessage());
+        }
+          
     }
 
     public function query($sql, $params = []) {

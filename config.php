@@ -1,7 +1,7 @@
 <?php
 
 return [
-    " db" => [
+    "db" => [
         "host" => "localhost",
         "user" => "root",
         "password" => "jelszo",
